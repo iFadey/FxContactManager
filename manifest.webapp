@@ -2,7 +2,7 @@
   "name": "FxContactMgr",
   "description": "Firefox OS Contact Viewer",
   "launch_path": "/index.html",
-  "icons": { "128": "/img/icon­128.png" },
+  "icons": { "128": "/img/icon-128.png" },
   "developer": {
     "name": "Fawad Hassan",
     "url": "http://ifadey.com"
@@ -11,7 +11,7 @@
   "permissions": {
     "contacts": {
       "access": "readwrite",
-      "description": "Required for contact manager app"
+      "description": "Required for contact viewer app"
     }
   }
 }
