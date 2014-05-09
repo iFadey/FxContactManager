@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>Firefox Contact Viewer</title>
+
+  <link href="css/style.css" rel="stylesheet">
+
+  <script defer src="js/namespace.js"></script>
+  <script defer src="js/api/contacts.js"></script>
+  <script defer src="js/view/utility.js"></script>
+  <script defer src="js/view/contact-details.js"></script>
+  <script defer src="js/view/contacts-list.js"></script>
+  <script defer src="js/main.js"></script>
+</head>
+<body>
+
+  <section id="view-contacts" class="view">
+    <header>
+      <h1>Contacts</h1>
+    </header>
+
+    <article class="view-content">
+      <ul id="contacts-list" class="list reset-list">
+        <li class="listitem">Contact 1</li>
+        <li class="listitem">Contact 2</li>
+        <li class="listitem">Contact 3</li>
+        <li class="listitem">Contact 4</li>
+        <li class="listitem">Contact 5</li>
+      </ul>
+    </article>
+  </section><!--end view-contacts-->
+
+  <section id="view-contact-details" class="view hide">
+    <header>
+      <button class="back left">&#10094;</button>
+      <h1>Contact Details</h1>
+    </header>
+
+    <article class="view-content">
+      <p>
+        <strong class="lbl">Name:</strong>
+        <span class="val name">Fawad Hassan</span>
+      </p>
+
+      <p>
+        <strong class="lbl">Mobile:</strong>
+        <span class="val mob">+92-333-1234567</span>
+      </p>
+
+      <p>
+        <strong class="lbl">Email:</strong>
+        <span class="val email">fawad@ifadey.com</span>
+      </p>
+    </article>
+  </section>
+
+
+  <script id="tmpl-contact-item" type="text/template">
+    <li class="listitem" data-idx="{{idx}}">{{fname}} {{lname}}</li>
+  </script>
+
+</body>
+</html>

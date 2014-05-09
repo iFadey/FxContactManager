@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'open_sansregular';
+    src: url('fonts/OpenSans-Regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+  font-family: 'open_sanslight';
+  src: url('fonts/OpenSans-Light-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+/* Stretch vertically */
+html, body { height: 100%; }
+
+body {
+  background: #f8f8f8;
+  color: #666;
+  font-family: open_sanslight, sans-serif;
+
+  /* Reset base size */
+  font-size: 16px;
+
+  /* Set font size relative to base size */
+  /* Check article on rem usage: http://snook.ca/archives/html_and_css/font-size-with-rem */
+  font-size: 1.4rem;
+
+  font-weight: 300;
+
+  /* Remove spacing */
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 { font-weight: 300; }
+
+strong { font-weight: bold; }
+
+a {
+  color: #00A8EA;
+  text-decoration: none;
+  text-shadow: 0px 1px 1px rgba(0,0,0,.3);
+}
+a:hover { color: #0086B7; }
+
+button {
+  font-family: open_sanslight, sans-serif;
+  font-size: 1.5rem;
+}
+
+
+#view-contact-details > .view-content {
+  padding: 0 1rem;
+}
+#view-contact-details .lbl {
+  display: block;
+}
+
+
+
+.view {
+  background: #f8f8f8;
+
+  /* Stretch both vertically/horizontally */
+  top: 0; right: 0; bottom: 0; left: 0;
+
+  position: fixed;
+  overflow: hidden;
+}
+.view > header {
+  background: #00A8EA;
+  border-bottom: 4px solid #e9e9e9;
+  color: #f8f8f8;
+  position: relative;
+  margin: 0;
+  text-align: center;
+}
+.view > header > h1 {
+  padding: .1rem 0 .3rem 0;
+  margin: 0;
+}
+.view > header > button {
+  background: none;
+  border: none;
+  color: #fff;
+}
+.view > header > button.left {
+  padding: 0.3rem .8rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.view > .view-content {
+  position: absolute;
+  top: 3.5rem; left: 0; right: 0; bottom: 0;
+  overflow-x: hidden;
+}
+
+.list > .listitem {
+  cursor: pointer;
+  padding: .6rem;
+  transition: all .3s;
+}
+.list > .listitem:nth-child(even) {
+  background: #fcfcfc;
+}
+.list > .listitem:hover {
+  background: #666;
+  color: #f8f8f8;
+}
+
+.reset-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hide {
+  display: none;
+}
+
+
+
+.slide-left-in {
+  animation-name: slide-left-in;
+  animation-duration: .6s;
+  transform: translateX(0%);
+}
+@keyframes slide-left-in {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0%); }
+}
+
+.slide-left-out {
+  animation-name: slide-left-out;
+  animation-duration: .6s;
+  transform: translateX(-100%);
+}
+@keyframes slide-left-out {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}

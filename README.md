@@ -1,4 +1,4 @@
-FxContactManager
+Firefox OS Contact Viewer
 ================
 
-Firefox OS Contact Viewer Using Vanilla JavaScript
+Sample Firefox OS Contact Viewer Using Vanilla JavaScript developed for educational purpose.
