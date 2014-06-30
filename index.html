@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>Firefox Contact Viewer</title>
 
+  <link href="component/x-view.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
 
+  <script src="js/lib/custom-elements.js"></script>
+  <script defer src="component/x-view.js"></script>
   <script defer src="js/namespace.js"></script>
   <script defer src="js/api/contacts.js"></script>
   <script defer src="js/view/utility.js"></script>
@@ -16,28 +19,29 @@
 </head>
 <body>
 
-  <section id="view-contacts" class="view">
+  <x-view id="view-contacts" style="display: none">
     <header>
       <h1>Contacts</h1>
     </header>
 
-    <article class="view-content">
+    <section>
       <ul id="contacts-list" class="list reset-list">
         <!--
           --- This is how the rendered template look like ---
           <li class="listitem" data-idx="0">Fawad Hassan</li>
         -->
       </ul>
-    </article>
-  </section><!--end view-contacts-->
+    </section>
+  </x-view><!--end view-contacts-->
 
-  <section id="view-contact-details" class="view hide">
+
+  <x-view id="view-contact-details" style="display: none">
     <header>
       <button class="back left">&#10094;</button>
       <h1>Contact Details</h1>
     </header>
 
-    <article class="view-content">
+    <section class="view-content">
       <p>
         <strong class="lbl">Name:</strong>
         <span class="val name">Fawad Hassan</span>
@@ -52,8 +56,8 @@
         <strong class="lbl">Email:</strong>
         <span class="val email">fawad@ifadey.com</span>
       </p>
-    </article>
-  </section>
+    </section>
+  </x-view><!--end view-contacts-details-->
 
 
   <script id="tmpl-contact-item" type="text/template">

@@ -1,0 +1,61 @@
+x-view {
+  display: flex;
+  flex-direction: column;
+  position: fixed !important;
+  top: 0; right: 0; bottom: 0; left: 0;
+  overflow: hidden;
+}
+
+x-view > header,
+x-view > footer {
+  text-align: center;
+}
+
+x-view > section {
+  flex: 1;
+  overflow: auto;
+}
+
+
+/**
+ * x-view animations
+ */
+x-view.slide-left-in {
+  animation: slide-left-in .5s;
+  transform: translateX(0%);
+}
+x-view.slide-left-out {
+  animation: slide-left-out .5s;
+  transform: translateX(-100%);
+}
+x-view.slide-right-in {
+  animation: slide-left-out .5s reverse;
+  transform: translateX(0%);
+}
+x-view.slide-right-out {
+  animation: slide-left-in .5s reverse;
+  transform: translateX(100%);
+}
+x-view.fade-in {
+  animation: fade-in .5s;
+  opacity: 1;
+}
+x-view.fade-out {
+  animation: fade-in .5s reverse;
+  opacity: 0;
+}
+
+@keyframes slide-left-in {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(0%); }
+}
+
+@keyframes slide-left-out {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}

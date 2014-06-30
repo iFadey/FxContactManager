@@ -1,8 +1,10 @@
 window.FxContactMgr.View.ContactList = (function () {
   'use strict';
 
-  var ContactsAPI = window.FxContactMgr.API.Contacts,
+  var exports = {},
+      ContactsAPI = window.FxContactMgr.API.Contacts,
       Utility = window.FxContactMgr.View.Utility,
+      ContactDetailsView = window.FxContactMgr.View.ContactDetails,
 
       ui = {},
       tmplContactItem = '',
@@ -12,7 +14,8 @@ window.FxContactMgr.View.ContactList = (function () {
   function contactClickHdlr(e) {
     var idx = e.target.dataset.idx;
     console.log(cachedContacts[idx]);
-    window.FxContactMgr.View.ContactDetails.render(cachedContacts[idx]);
+    ui.view.hide('fade-out');
+    ContactDetailsView.render(cachedContacts[idx]);
   }
 
 
@@ -28,14 +31,14 @@ window.FxContactMgr.View.ContactList = (function () {
       console.log(c);
       var contact = {
         idx    : cachedContacts.length,
-        fname  : c.givenName  ? c.givenName[0]  : '[NONE]',
-        lname  : c.familyName ? c.familyName[0] : '[NONE]',
+        fname  : c.givenName  ? c.givenName[0]  : '',
+        lname  : c.familyName ? c.familyName[0] : '',
 
         //both tel and email properties are arrays and
         //may contain more than one number/email.
         //For simplicity I am using only first one
-        mobile : c.tel.length   ? c.tel[0].value    : '[NONE]',
-        email  : c.email.length ? c.email[0].value  : '[NONE]',
+        mobile : c.tel && c.tel.length   ? c.tel[0].value    : '[NONE]',
+        email  : c.email && c.email.length ? c.email[0].value  : '[NONE]'
       };
 
       cachedContacts.push(contact);
@@ -48,19 +51,21 @@ window.FxContactMgr.View.ContactList = (function () {
 
 
   function render() {
-    console.log('contacts list render...');
+    console.log('init...');
 
-    render = function () {
+    exports.render = function () {
+      console.log('render contact list...');
       /**
        * here goes the code which can show
        * this view maybe using CSS3 animations
        * or also any work that needs to be done
        * before showing the view
        */
+      ui.view.show('fade-in');
     };
 
     init();
-    render();
+    exports.render();
   } //end render
 
 
@@ -84,8 +89,7 @@ window.FxContactMgr.View.ContactList = (function () {
   } //end init
 
 
-  return {
-    render : render
-  };
+  exports.render = render;
+  return exports;
 
 }());

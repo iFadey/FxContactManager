@@ -1,44 +1,41 @@
 window.FxContactMgr.View.ContactDetails = (function () {
   'use strict';
 
-  var ContactsAPI = window.FxContactMgr.API.Contacts,
+  var exports = {},
+      ContactsAPI = window.FxContactMgr.API.Contacts,
       Utility = window.FxContactMgr.View.Utility,
+      ContactListView = null,
 
       ui = {},
       tmplContactItem = '';
 
 
   function closeView() {
-    ui.view.classList.remove('slide-left-in');
-    ui.view.classList.add('slide-left-out');
-  }
-
-
-  function hideView(e) {
-    if (e.animationName === 'slide-left-out')
-      ui.view.classList.add('hide');
+    ui.view.hide('slide-left-out');
+    ContactListView.render();
   }
 
 
   function render(contact) {
 
-    render = function (contact) {
+    exports.render = function (contact) {
       console.log('render contact details...');
-      ui.view.classList.remove('hide');
-      ui.view.classList.remove('slide-left-out');
-      ui.view.classList.add('slide-left-in');
 
       ui.valName.textContent = contact.fname + ' ' + contact.lname;
       ui.valMob.textContent = contact.mobile;
       ui.valEmail.textContent = contact.email;
+
+      ui.view.show('slide-left-in');
     };
 
     init();
-    render(contact);
+    exports.render(contact);
   } //end render
 
 
   function init() {
+    ContactListView = window.FxContactMgr.View.ContactList;
+
     //--- cache dom elements ---//
     ui.view = document.querySelector('#view-contact-details');
     ui.btnBack = document.querySelector('#view-contact-details > header > .back');
@@ -52,14 +49,12 @@ window.FxContactMgr.View.ContactDetails = (function () {
      * touch screens. That way you can eleminate 300ms delay in your
      * touch/click events http://addr.pk/ae631
      */
-    ui.view.addEventListener('animationend', hideView, false);
     ui.btnBack.addEventListener('click', closeView, false);
 
   } //end init
 
 
-  return {
-    render : render
-  };
+  exports.render = render;
+  return exports;
 
 }());
