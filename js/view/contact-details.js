@@ -2,8 +2,7 @@ window.FxContactMgr.View.ContactDetails = (function () {
   'use strict';
 
   var exports = {},
-      ContactsAPI = window.FxContactMgr.API.Contacts,
-      Utility = window.FxContactMgr.View.Utility,
+      ContactsAPI = null,
       ContactListView = null,
 
       ui = {},
@@ -34,6 +33,7 @@ window.FxContactMgr.View.ContactDetails = (function () {
 
 
   function init() {
+    ContactsAPI = window.FxContactMgr.API.Contacts;
     ContactListView = window.FxContactMgr.View.ContactList;
 
     //--- cache dom elements ---//

@@ -12,7 +12,6 @@
   <script defer src="component/x-view.js"></script>
   <script defer src="js/namespace.js"></script>
   <script defer src="js/api/contacts.js"></script>
-  <script defer src="js/view/utility.js"></script>
   <script defer src="js/view/contact-details.js"></script>
   <script defer src="js/view/contacts-list.js"></script>
   <script defer src="js/main.js"></script>
@@ -60,9 +59,9 @@
   </x-view><!--end view-contacts-details-->
 
 
-  <script id="tmpl-contact-item" type="text/template">
-    <li class="listitem" data-idx="{{idx}}">{{fname}} {{lname}}</li>
-  </script>
+  <template id="tmpl-contact-item">
+    <li class="listitem"></li>
+  </template>
 
 </body>
 </html>

@@ -2,12 +2,11 @@ window.FxContactMgr.View.ContactList = (function () {
   'use strict';
 
   var exports = {},
-      ContactsAPI = window.FxContactMgr.API.Contacts,
-      Utility = window.FxContactMgr.View.Utility,
-      ContactDetailsView = window.FxContactMgr.View.ContactDetails,
+      ContactsAPI = null,
+      ContactDetailsView = null,
 
       ui = {},
-      tmplContactItem = '',
+      tmplContactItem = null,
       cachedContacts = [];
 
 
@@ -19,13 +18,21 @@ window.FxContactMgr.View.ContactList = (function () {
   }
 
 
+  function renderContact(contact) {
+    var li = tmplContactItem.cloneNode(true).querySelector('li.listitem');
+    li.dataset.idx = contact.idx;
+    li.textContent = contact.fname + ' ' + contact.lname;
+    return li;
+  }
+
+
   function renderContacts(contacts) {
     if (!contacts) {
       alert('Failed to load contacts');
       return;
     }
 
-    var list = '';
+    var listFragment = document.createDocumentFragment();
 
     contacts.forEach(function (c) {
       console.log(c);
@@ -42,11 +49,10 @@ window.FxContactMgr.View.ContactList = (function () {
       };
 
       cachedContacts.push(contact);
-
-      list += Utility.renderTmpl(tmplContactItem, contact);
+      listFragment.appendChild(renderContact(contact));
     });
 
-    ui.contactList.innerHTML = list;
+    ui.contactList.appendChild(listFragment);
   } //end renderContacts
 
 
@@ -70,10 +76,13 @@ window.FxContactMgr.View.ContactList = (function () {
 
 
   function init() {
+    ContactsAPI = window.FxContactMgr.API.Contacts;
+    ContactDetailsView = window.FxContactMgr.View.ContactDetails;
+
     //--- cache dom elements ---//
     ui.view = document.querySelector('#view-contacts');
     ui.contactList = document.querySelector('#view-contacts #contacts-list');
-    tmplContactItem = document.querySelector('#tmpl-contact-item').innerHTML;
+    tmplContactItem = document.querySelector('#tmpl-contact-item').content;
 
     //--- add event listeners ---//
     /**
