@@ -1,13 +1,17 @@
 window.FxContactMgr.View.ContactList = (function () {
   'use strict';
 
+  const CHUNK_SIZE = 20;
+
   var exports = {},
       ContactsAPI = null,
       ContactDetailsView = null,
 
       ui = {},
       tmplContactItem = null,
-      cachedContacts = [];
+      cachedContacts = [],
+      isFirstChunk = true,
+      renderedTill = 0;
 
 
   function contactClickHdlr(e) {
@@ -18,42 +22,54 @@ window.FxContactMgr.View.ContactList = (function () {
   }
 
 
-  function renderContact(contact) {
+  function contentScroll(e) {
+    var viewContent = ui.viewContent;
+
+    // scrolled so far + height of container >= total scroll height
+    if ((viewContent.scrollTop + viewContent.offsetHeight) >= viewContent.scrollHeight) {
+      //load more contacts
+      renderContacts();
+    }
+  }
+
+
+  function renderContact(contact, idx) {
     var li = tmplContactItem.cloneNode(true).querySelector('li.listitem');
-    li.dataset.idx = contact.idx;
+    li.dataset.idx = idx;
     li.textContent = contact.fname + ' ' + contact.lname;
     return li;
   }
 
 
-  function renderContacts(contacts) {
+  function renderContacts() {
+    var listFragment = document.createDocumentFragment(),
+        i,
+        len = cachedContacts.length,
+        limit = renderedTill + CHUNK_SIZE;
+
+    for (i = renderedTill; i < len && i < limit; ++i) {
+      listFragment.appendChild(renderContact(cachedContacts[i], i));
+    }
+
+    ui.contactList.appendChild(listFragment);
+    renderedTill = i;
+  }
+
+
+  function getContactsCb(contacts) {
     if (!contacts) {
       alert('Failed to load contacts');
       return;
     }
 
-    var listFragment = document.createDocumentFragment();
+    cachedContacts = cachedContacts.concat(contacts);
 
-    contacts.forEach(function (c) {
-      console.log(c);
-      var contact = {
-        idx    : cachedContacts.length,
-        fname  : c.givenName  ? c.givenName[0]  : '',
-        lname  : c.familyName ? c.familyName[0] : '',
+    if (isFirstChunk) {
+      renderContacts();
+      isFirstChunk = false;
+    }
 
-        //both tel and email properties are arrays and
-        //may contain more than one number/email.
-        //For simplicity I am using only first one
-        mobile : c.tel && c.tel.length   ? c.tel[0].value    : '[NONE]',
-        email  : c.email && c.email.length ? c.email[0].value  : '[NONE]'
-      };
-
-      cachedContacts.push(contact);
-      listFragment.appendChild(renderContact(contact));
-    });
-
-    ui.contactList.appendChild(listFragment);
-  } //end renderContacts
+  } //end getContactsCb
 
 
   function render() {
@@ -81,7 +97,8 @@ window.FxContactMgr.View.ContactList = (function () {
 
     //--- cache dom elements ---//
     ui.view = document.querySelector('#view-contacts');
-    ui.contactList = document.querySelector('#view-contacts #contacts-list');
+    ui.viewContent = ui.view.querySelector('.view-content');
+    ui.contactList = ui.view.querySelector('#contacts-list');
     tmplContactItem = document.querySelector('#tmpl-contact-item').content;
 
     //--- add event listeners ---//
@@ -91,9 +108,10 @@ window.FxContactMgr.View.ContactList = (function () {
      * touch/click events http://addr.pk/ae631
      */
     ui.contactList.addEventListener('click', contactClickHdlr, false);
+    ui.viewContent.addEventListener('scroll', contentScroll, false);
 
     //--- load and render contact list ---//
-    ContactsAPI.getAllContacts(renderContacts);
+    ContactsAPI.getAllContacts(CHUNK_SIZE, getContactsCb);
 
   } //end init
 
